@@ -1,6 +1,8 @@
 <template>
     
-    <input type="text">
+   <div class="card-body">
+           Example
+    </div>
 
 </template>
 
