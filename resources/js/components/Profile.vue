@@ -8,10 +8,8 @@
 
                 <div class="card">
 
-                    <div class="card-header">User Component</div>
-
-  
-
+                    <div class="card-header">Profile INfo</div>
+ 
                     <div class="card-body">
 
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod

@@ -6,18 +6,52 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 
+//Vue-forms
+
+window.Form =  Form;
+import { Form , HasError, AlertError } from 'vform'
+  
+Vue.component(HasError.name, HasError)
+Vue.component(AlertError.name, AlertError)
+
+
+//Filter Data npm install moment
+
+Vue.filter('upText', function(text){
+  return text.charAt(0).toUpperCase() + text.slice(1);
+});
+
+import moment from 'moment'
+
+Vue.filter('myDate',function(created){
+  return moment(created).format('MMMM Do YYYY');
+});
+
+
+//Progress Bar   npm install vue-progressbar
+
+import VueProgressBar from 'vue-progressbar'
+
+Vue.use(VueProgressBar, {
+  color: 'rgb(143, 255, 199)',
+  failedColor: 'red',
+  height: '3px'
+})
+
+
 //Route
 
 import VueRouter from 'vue-router'
-
 Vue.use(VueRouter)
 
 let routes = [
     { path: '/dashboard', component: require('./components/Dashboard.vue').default },
+    { path: '/users', component: require('./components/Users.vue').default   },
     { path: '/profile', component: require('./components/Profile.vue').default   }
   ]
 
   const router = new VueRouter({
+    mode : 'history',
     routes // short for `routes: routes`
   })
 
