@@ -12,6 +12,8 @@
  
                     <div class="card-body">
 
+                         
+
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 
                         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -45,13 +47,9 @@
 <script>
 
     export default {
-
-        mounted() {
-
+         mounted() {
             console.log('Component mounted.')
-
-        }
-
+        }        
     }
 
 </script>

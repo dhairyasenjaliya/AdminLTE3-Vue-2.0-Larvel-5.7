@@ -8,7 +8,7 @@
               <div class="card-header">
                 <h3 class="card-title">Users List</h3>   
                 <div class="card-tools">
-                        <button class="btn btn-success" data-toggle="modal" data-target="#addNew">Add User <i class="fas fa-user-plus"></i></button>
+                        <button class="btn btn-success" @click="AddUserModel">Add User <i class="fas fa-user-plus"></i></button>
                 </div>               
               </div>
               <!-- /.card-header -->
@@ -33,13 +33,12 @@
                     <td>{{user.photo}}</td>
                     <td>{{user.created_at | myDate}}</td>
                     <td>                        
-                        <a href="#edit">
+                        <a href="#" @click="EditUserModel(user)">
                             <i class="fa fa-edit"></i>
                         </a>   /   
-                        <a href="#delete">
+                        <a href="#" @click="deleteUser(user.id)">
                             <i class="fa fa-trash red"></i>
                         </a> 
-
                     </td>
                   </tr>
                 </tbody></table>
@@ -54,12 +53,13 @@
                     <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addNew">Add New Users </h5>
+                   <h5 v-show="editmode" class="modal-title" id="addNew">Update User's Information </h5>
+                    <h5 v-show="!editmode" class="modal-title" id="addNew">Add New User </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form @submit.prevent="createUser" @keydown="form.onKeydown($event)">
+                <form @submit.prevent="editmode ? UpdateUser():createUser()" @keydown="form.onKeydown($event)">
                 <div class="modal-body">
                     <div class="form-group">                    
                     <input v-model="form.name" type="text" name="name" placeholder="Enter Name" class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
@@ -98,7 +98,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Create</button>
+                    <button v-show="editmode" type="submit" class="btn btn-success">Update</button>
+                    <button v-show="!editmode" type="submit" class="btn btn-primary">Add</button>
                 </div>
                 </form>
                 </div>
@@ -113,6 +114,8 @@
 
         data(){
             return {
+                id :'',
+                editmode:false,
                 users:{},
                 form : new Form({
                 name: '',
@@ -126,18 +129,107 @@
         },
 
         methods:{
+
+                UpdateUser()
+                {                      
+                      this.$Progress.start();
+                      this.form.put('api/user/'+this.form.id)
+                      .then(()=>{      
+                                          // Fire.$emit('CreateUser'); //Create Custom Event
+                                          // $('#addNew').modal('hide')
+                                          // toast.fire({
+                                          //             type: 'success',
+                                          //             title: 'User Addded Succesfully'                                              
+                                          //           });                                 
+                                          this.$Progress.finish();
+                                })
+                                .catch(()=>{
+                                          // toast.fire({
+                                          //             type: 'error',
+                                          //             title: 'Please check validation'                                              
+                                          //           });                                 
+                                          this.$Progress.fail();
+                                })
+                      
+                },
+                AddUserModel(){
+                      this.form.reset();
+                      this.form.clear();
+                      this.editmode = false;   
+                      $('#addNew').modal('show');
+                },
+                EditUserModel(user){
+                      this.form.reset();
+                      this.form.clear();
+                      this.editmode = true;                      
+                      $('#addNew').modal('show');
+                      this.form.fill(user); //As we used v-form gives many built in functions
+                },
                 loadUser(){
-                  axios.get("api/user").then(({ data }) => (this.users = data));
+                                axios.get("api/user").then(({ data }) => (this.users = data));
                 },
                 createUser(){
-                                this.$Progress.start()
-                                this.form.post('api/user');
-                 } 
+                                this.$Progress.start();
+                                this.form.post('api/user')   // promise functions async and await  ES6 new functions and also then and catch are new function
+                                .then(()=>{      
+                                          Fire.$emit('CreateUser'); //Create Custom Event
+                                          $('#addNew').modal('hide')
+                                          toast.fire({
+                                                      type: 'success',
+                                                      title: 'User Addded Succesfully'                                              
+                                                    });                                 
+                                          this.$Progress.finish();
+                                })
+                                .catch(()=>{
+                                          toast.fire({
+                                                      type: 'error',
+                                                      title: 'Please check validation'                                              
+                                                    });                                 
+                                          this.$Progress.fail();
+                                })
+                 },
+                 deleteUser(id){
+                  this.$Progress.start();
+                   swal.fire({
+                                title: 'Are you sure?',
+                                text: "You won't be able to revert this!",
+                                type: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Yes, delete it!'
+                              }).then((result) => {
+                                if (result.value) {                                  
+                                  this.form.delete('api/user/'+id).then(()=>{
+                                    Fire.$emit('CreateUser'); //Used For update table with event
+                                   swal.fire(
+                                              'Deleted!',
+                                              'User has been deleted.',
+                                              'success'
+                                            );
+                                      this.$Progress.fail();
+                                  }).catch(()=>{
+                                            swal(
+                                            'Failed!',
+                                            'There Was Somthing Wrong ! ',
+                                            'warning'                                   
+                                            );
+                                  });                                                                 
+                                }
+                             })
+                      
+                 }
         },
 
         created(){
             this.$Progress.start();
-            this.loadUser();
+            this.loadUser();  
+            Fire.$on('CreateUser',() => {
+                this.loadUser();  //Trigger EVent when CreateUser is fired 
+            } );
+            // For updating user table every 3 second METHOD - 1 (PErformance Issues) Applicable for small app
+            // setInterval(()=>this.loadUser(),3000);
+            this.$Progress.finish();
         },
 
         mounted() {

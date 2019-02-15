@@ -63,8 +63,17 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //
+    { 
+        // $this->validate($request, [
+        //     'name'=> 'required|string|max:191',
+        //     'email'=>'required|string|max:191|email|unique:users'.$user->id, //Escape current user
+        //     'password'=>'sometimes|string|min:6', 
+        // ]);
+
+        // $user = User::findOrFail($id);
+        // $user->update($request->all());
+
+        return [$user->id];
     }
 
     /**
@@ -75,6 +84,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
     }
 }

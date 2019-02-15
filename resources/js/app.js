@@ -6,7 +6,7 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 
-//Vue-forms
+//Vue-forms  npm i vue-form
 
 window.Form =  Form;
 import { Form , HasError, AlertError } from 'vform'
@@ -33,13 +33,32 @@ Vue.filter('myDate',function(created){
 import VueProgressBar from 'vue-progressbar'
 
 Vue.use(VueProgressBar, {
-  color: 'rgb(143, 255, 199)',
-  failedColor: 'red',
-  height: '3px'
+    color: 'rgb(143, 255, 199)',
+    failedColor: 'red',
+    height: '13px'
 })
 
+// Sweet alerts npm install sweetalert2
 
-//Route
+import swal from 'sweetalert2'
+window.swal =  swal;
+
+const toast = swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000
+});
+
+window.toast =  toast;
+ 
+
+//Fetch Data using Custom event
+
+window.Fire = new Vue();
+
+
+//Route npm install vue-router
 
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
