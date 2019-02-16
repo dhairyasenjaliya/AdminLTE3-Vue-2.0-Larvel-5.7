@@ -1,7 +1,5 @@
 <template>
-
     <div class="container">
-
       <div class="row mt-5">
           <div class="col-md-12">
             <div class="card">
@@ -48,7 +46,7 @@
             <!-- /.card -->
           </div>
     </div>
-    <!-- MOdel -->
+                <!-- MOdel -->
                 <div class="modal" id="addNew" tabindex="-1" role="dialog">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
@@ -113,11 +111,11 @@
     export default {
 
         data(){
-            return {
-                id :'',
+            return {                
                 editmode:false,
                 users:{},
                 form : new Form({
+                id : '',
                 name: '',
                 email: '',
                 password: '',
@@ -133,21 +131,21 @@
                 UpdateUser()
                 {                      
                       this.$Progress.start();
-                      this.form.put('api/user/'+this.form.id)
-                      .then(()=>{      
-                                          // Fire.$emit('CreateUser'); //Create Custom Event
-                                          // $('#addNew').modal('hide')
-                                          // toast.fire({
-                                          //             type: 'success',
-                                          //             title: 'User Addded Succesfully'                                              
-                                          //           });                                 
+                      this.form.put('api/user/'+this.form.id )
+                      .then(()=>{       
+                                          Fire.$emit('CreateUser'); //Create Custom Event                                          
+                                          $('#addNew').modal('hide')
+                                          toast.fire({
+                                                      type: 'success',
+                                                      title: 'Users Information Has Been Update Succesfully'                                              
+                                                    });                                 
                                           this.$Progress.finish();
                                 })
-                                .catch(()=>{
-                                          // toast.fire({
-                                          //             type: 'error',
-                                          //             title: 'Please check validation'                                              
-                                          //           });                                 
+                                .catch(()=>{                                    
+                                          toast.fire({
+                                                      type: 'error',
+                                                      title: 'Somthing Went Wrong !'                                              
+                                                    });                                 
                                           this.$Progress.fail();
                                 })
                       
@@ -161,12 +159,12 @@
                 EditUserModel(user){
                       this.form.reset();
                       this.form.clear();
-                      this.editmode = true;                      
+                      this.editmode = true;
                       $('#addNew').modal('show');
                       this.form.fill(user); //As we used v-form gives many built in functions
                 },
                 loadUser(){
-                                axios.get("api/user").then(({ data }) => (this.users = data));
+                            axios.get("api/user").then(({ data }) => (this.users = data));
                 },
                 createUser(){
                                 this.$Progress.start();
@@ -176,7 +174,7 @@
                                           $('#addNew').modal('hide')
                                           toast.fire({
                                                       type: 'success',
-                                                      title: 'User Addded Succesfully'                                              
+                                                      title: 'User Has Been Addded Succesfully'                                              
                                                     });                                 
                                           this.$Progress.finish();
                                 })

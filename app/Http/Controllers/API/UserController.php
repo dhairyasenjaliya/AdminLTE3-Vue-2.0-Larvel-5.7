@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -27,11 +33,10 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {   
-
         $this->validate($request, [
             'name'=> 'required|string|max:191',
             'email'=>'required|string|max:191|email|unique:users', 
-            'password'=>'required|string|min:6',
+            'password'=>'required|min:6',
         ]);
 
         return User::create([
@@ -63,17 +68,16 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    { 
-        // $this->validate($request, [
-        //     'name'=> 'required|string|max:191',
-        //     'email'=>'required|string|max:191|email|unique:users'.$user->id, //Escape current user
-        //     'password'=>'sometimes|string|min:6', 
-        // ]);
-
-        // $user = User::findOrFail($id);
-        // $user->update($request->all());
-
-        return [$user->id];
+    {          
+        $user = User::findOrFail($id);
+        $this->validate($request, [
+            'name'=> 'required|string|max:191',
+            'email'=>'required|string|max:191|email|unique:users,email,'.$user->id , //Escape current user
+            'password'=>'required|min:6', 
+        ]);           
+        
+        $user -> update( $request->all() );
+        return ['meassage'=>$id];
     }
 
     /**
