@@ -12,7 +12,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <title>Welcome Back | {{ Auth::user()->name }}</title>
  
   <link rel="stylesheet" href="/css/app.css">
-
+  
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper" id="app">

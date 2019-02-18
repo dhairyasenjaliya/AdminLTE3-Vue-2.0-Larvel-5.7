@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Support\Facades\Hash;
+use Image;
+use File;
 
 class UserController extends Controller
 {
@@ -60,6 +62,39 @@ class UserController extends Controller
         //
     }
 
+    public function updateprofile(Request $request)
+    {    
+        $user= auth('api')->user(); 
+        $this->validate($request, [
+            'name'=> 'required|string|max:191',
+            'email'=>'required|string|max:191|email|unique:users,email,'.$user->id , //Escape current user
+            'password'=>'sometimes|min:6'            
+        ]);           
+         
+         $currentPhoto = $user->photo;
+         if($request->photo != $currentPhoto){ 
+            File::delete(public_path('image/profile/').$currentPhoto);                 
+            $name = time().'.'.explode('/',explode(':',substr($request->photo,0,strpos($request->photo,';')))[1])[1];
+            Image::make($request->photo)->save(public_path('image/profile/').$name);
+            $request->merge(['photo'=>$name]);
+         } 
+
+         if(!empty($request->password))
+         {
+             $request->merge(['password'=>Hash::make($request['password'])]);
+         }
+         $user -> update( $request->all() );          
+    }
+
+
+    //Profile Display
+
+    public function profile()
+    {
+        //  return Auth::User();
+         return auth('api')->user();//For api 
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -73,11 +108,11 @@ class UserController extends Controller
         $this->validate($request, [
             'name'=> 'required|string|max:191',
             'email'=>'required|string|max:191|email|unique:users,email,'.$user->id , //Escape current user
-            'password'=>'required|min:6', 
+            'password'=>'sometimes|min:6', 
         ]);           
         
         $user -> update( $request->all() );
-        return ['meassage'=>$id];
+        // return ['meassage'=>$id];
     }
 
     /**

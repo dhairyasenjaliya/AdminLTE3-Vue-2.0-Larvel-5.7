@@ -6,6 +6,8 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 
+//npm install axios --save axios
+
 //Vue-forms  npm i vue-form
 
 window.Form =  Form;
@@ -13,6 +15,9 @@ import { Form , HasError, AlertError } from 'vform'
   
 Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
+
+// Upload and convert base64 string to image   http://image.intervention.io/getting_started/installation
+//php artisan vendor:publish --provider="Intervention\Image\ImageServiceProviderLaravel5"
 
 
 //Filter Data npm install moment
@@ -94,7 +99,7 @@ let routes = [
     routes // short for `routes: routes`
   })
 
-
+ 
 const app = new Vue({
     el: '#app',
     router

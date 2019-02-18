@@ -18,5 +18,9 @@ use Illuminate\Http\Request;
 // });
 
 Route::apiResource('user','API\UserController'); 
+Route::get('profile','API\UserController@profile'); 
 
+Route::get('profile','API\UserController@profile'); 
+Route::put('profile','API\UserController@updateProfile'); 
 
+    
