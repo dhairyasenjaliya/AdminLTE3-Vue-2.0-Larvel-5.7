@@ -15,6 +15,7 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth:api');
+        // $this->authorize('isAdmin');   Will check and allow for all the pages for Admin only
     }
 
     /**
@@ -23,8 +24,12 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return User::latest()->paginate(10);
+    {       
+        // if (\Gate::allows('isAdmin') || \Gate::allows('isAuthor')) {
+        //     return User::latest()->paginate(5);
+        // } //For Multi Access Users
+        $this->authorize('isAdmin');
+        return User::latest()->paginate(20);
     }
 
     /**
@@ -35,6 +40,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {   
+        $this->authorize('isAdmin');  
         $this->validate($request, [
             'name'=> 'required|string|max:191',
             'email'=>'required|string|max:191|email|unique:users', 
@@ -68,7 +74,7 @@ class UserController extends Controller
         $this->validate($request, [
             'name'=> 'required|string|max:191',
             'email'=>'required|string|max:191|email|unique:users,email,'.$user->id , //Escape current user
-            'password'=>'sometimes|min:6'            
+            'password'=>'sometimes|min:6'
         ]);           
          
          $currentPhoto = $user->photo;
@@ -103,7 +109,8 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {          
+    {      
+        $this->authorize('isAdmin');    
         $user = User::findOrFail($id);
         $this->validate($request, [
             'name'=> 'required|string|max:191',
@@ -123,6 +130,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('isAdmin');
         $user = User::findOrFail($id);
         $user->delete();
     }

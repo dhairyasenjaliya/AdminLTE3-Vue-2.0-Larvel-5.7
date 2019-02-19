@@ -33,6 +33,14 @@ Vue.filter('myDate',function(created){
 });
 
 
+//For Authentaction user
+
+
+import Gate from "./Gate";
+Vue.prototype.$gate = new Gate(window.user);
+
+
+
 //Progress Bar   npm install vue-progressbar
 
 import VueProgressBar from 'vue-progressbar'
@@ -74,6 +82,15 @@ Vue.component(
   'passport-personal-access-tokens',
   require('./components/passport/PersonalAccessTokens.vue').default
 );
+
+
+// Best 404 page designs https://undraw.co/illustrations
+
+Vue.component(
+  'not-found',//Creating Tags
+  require('./components/NotFound.vue').default
+);
+
 
 
 

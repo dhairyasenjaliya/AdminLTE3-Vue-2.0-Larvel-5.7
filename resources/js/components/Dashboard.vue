@@ -2,7 +2,7 @@
 
     <div class="container">
      <div class="row mt-3">
-     <div class="row">
+     <div class="row">        
           <div class="col-md-3 col-sm-6 col-12">
             <div class="info-box bg-info-gradient">
               <span class="info-box-icon"><i class="fa fa-bookmark-o"></i></span>

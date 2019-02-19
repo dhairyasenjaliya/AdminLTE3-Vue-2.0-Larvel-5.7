@@ -1,5 +1,11 @@
 <style>
-     
+     .widget-user-header{
+          background-position: center center;
+          background-size: cover;
+          height: 250px !important;
+}
+.widget-user .card-footer{
+    padding: 0;}
 </style>
 
 <template>
@@ -10,8 +16,8 @@
             <div class="card card-widget widget-user">
               <!-- Add the bg color to the header using any of the bg-* classes -->
               <div class="widget-user-header text-white" v-bind:style="{ 'background-image': 'url(./image/user-back.jpg)' }   ">
-                <h3 class="widget-user-username">Dhairya </h3>
-                <h5 class="widget-user-desc">Web Designer </h5>
+                <h3 class="widget-user-username"> {{ this.form.name }}  </h3>
+                <h5 class="widget-user-desc">{{ this.form.type }} </h5>
                
               </div>
               <div class="widget-user-image">
@@ -131,8 +137,7 @@
   
 
 <script>
-    export default {
-      
+    export default {      
               data(){
             return {  
                 form : new Form({
@@ -145,57 +150,60 @@
                                   photo: ''
                               })
             }
-        },
- 
-        created(){
-              this.$Progress.start();               
-              axios.get("api/profile")
-              .then(({ data }) => (this.form.fill(data)));    
-              
-              Fire.$on('updateProfile',() => {
-                this.getProfilePhoto();  //Trigger EVent when CreateUser is fired 
-              } );
-              this.$Progress.finish();           
-        },
+        },       
 
         methods:{
               updateProfilePic(e){
-                    let file = e.target.files[0];
-                    let reader = new FileReader();
-                    reader.onloadend = (file) => {
-                              this.form.photo = reader.result;
-                        }
-                    reader.readAsDataURL(file);   
-                                        
+                  this.$Progress.start();  
+                  let file = e.target.files[0];
+                  let reader = new FileReader();
+                  let limit = 1024 * 1024 * 2;
+                  if(file['size'] > limit){
+                    toast.fire({
+                                  type: 'error',
+                                  title: 'Profile Pic is too large'                                              
+                               });
+                        this.$Progress.fail();
+                        return false;
+                  }
+                  reader.onloadend = (file) => {
+                      this.form.photo = reader.result;
+                  }
+                  reader.readAsDataURL(file);
+                  this.$Progress.finish();                                          
               },
 
              
               getProfilePhoto(){
-                      return "image/profile/"+this.form.photo;                     
+                      let photo = (this.form.photo.length > 200) ? this.form.photo : "image/profile/"+ this.form.photo ;
+                      return photo;                                     
               },
 
               updateInfo(){
-                this.$Progress.start();                   
+                    this.$Progress.start();                   
                     this.form.put('api/profile/')
-                    .then(()=>{                      
-                             toast.fire({
+                    .then(()=>{                                                                          
+                              toast.fire({
                                          type: 'success',
                                          title: 'Your Profile is Updated'                                              
-                                       });   
-                            this.getProfilePhoto();
+                                       });                            
                             this.$Progress.finish();  
                     })
                     .catch(()=>{
                         this.$Progress.fail();  
-                    })  
-                     Fire.$emit('updateProfile');
+                    })                       
               }
         }, 
+
+        created(){
+              this.$Progress.start();                          
+              axios.get("api/profile")
+              .then(({ data }) => (this.form.fill(data)));               
+              this.$Progress.finish();           
+        },
  
         mounted() {               
             console.log('Component mounted.')           
-        }
- 
+        } 
   }
-
 </script>

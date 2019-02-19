@@ -25,7 +25,20 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+
+        //ACL direct Provided 
+
+        Gate::define('isAdmin',function($user){
+            return $user->type === 'Admin';
+        });
+        Gate::define('isAuthor',function($user){
+            return $user->type === 'author';
+        });
+        Gate::define('isUser',function($user){
+            return $user->type === 'user';
+        });
+
+
         Passport::routes();
-        //
     }
 }
