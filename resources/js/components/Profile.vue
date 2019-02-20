@@ -3,6 +3,22 @@
           background-position: center center;
           background-size: cover;
           height: 250px !important;
+     }
+.vue-typer {
+  font-family: monospace;
+}
+
+.vue-typer .custom.char {
+  color: #D4D4BD;
+  background-color: #1E1E1E;
+}
+.vue-typer .custom.char.selected {
+  background-color: #264F78;
+}
+
+.vue-typer .custom.caret {
+  width: 10px;
+  background-color: #3F51B5;
 }
 .widget-user .card-footer{
     padding: 0;}
@@ -10,18 +26,19 @@
 
 <template>
     <div class="container">
-        <div class="row mt-4">
+        <div class="row mt-4">           
             <div class="col-md-12">               
             <!-- Widget: user widget style 1 -->
             <div class="card card-widget widget-user">
               <!-- Add the bg color to the header using any of the bg-* classes -->
               <div class="widget-user-header text-white" v-bind:style="{ 'background-image': 'url(./image/user-back.jpg)' }   ">
-                <h3 class="widget-user-username"> {{ this.form.name }}  </h3>
+                <h3 class="widget-user-username"> <vue-typer text='Hello !'></vue-typer>  {{ this.form.name }}  </h3>
                 <h5 class="widget-user-desc">{{ this.form.type }} </h5>
                
               </div>
               <div class="widget-user-image">
-                <img class="img-circle" :src="getProfilePhoto()"  alt="User Avatar">  
+                <img class="img-circle" :src="getProfilePhoto()"  alt="User Avatar"> 
+                 <!-- Giving error -->
                 <!-- Image display in vue components -->
               </div>
               <div class="card-footer">

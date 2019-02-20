@@ -29,7 +29,7 @@ class UserController extends Controller
         //     return User::latest()->paginate(5);
         // } //For Multi Access Users
         $this->authorize('isAdmin');
-        return User::latest()->paginate(20);
+        return User::latest()->paginate(5);
     }
 
     /**

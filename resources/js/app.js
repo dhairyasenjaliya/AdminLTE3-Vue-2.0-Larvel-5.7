@@ -4,7 +4,16 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+ 
+//Vue  typer https://cngu.github.io/vue-typer/        npm install --save vue-typer
 
+import VueTyperPlugin from 'vue-typer'
+ 
+Vue.use(VueTyperPlugin) 
+
+// Different Types of Packages  https://github.com/vuejs/awesome-vue
+
+// Seeding the data sql   https://mockaroo.com/
 
 //npm install axios --save axios
 
@@ -31,6 +40,12 @@ import moment from 'moment'
 Vue.filter('myDate',function(created){
   return moment(created).format('MMMM Do YYYY');
 });
+
+
+
+// For Dyanmic Table and pagination   npm install laravel-vue-pagination   https://github.com/gilbitron/laravel-vue-pagination
+
+Vue.component('pagination', require('laravel-vue-pagination'));
 
 
 //For Authentaction user
@@ -108,7 +123,8 @@ let routes = [
     { path: '/dashboard', component: require('./components/Dashboard.vue').default },
     { path: '/users', component: require('./components/Users.vue').default   },
     { path: '/profile', component: require('./components/Profile.vue').default   },
-    { path: '/developer', component: require('./components/Developer.vue').default   }
+    { path: '/developer', component: require('./components/Developer.vue').default   },
+    { path: '/*', component: require('./components/NotFound.vue').default   }
   ]
 
   const router = new VueRouter({

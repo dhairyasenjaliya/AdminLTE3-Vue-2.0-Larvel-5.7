@@ -1,77 +1,95 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>AdminLTE 3 | Registration Page</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+   
+  <link rel="shortcut icon" href="./image/favicon.png">
+  <link rel="stylesheet" href="/css/app.css">
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
+<style>
+.register-box{ 
+        margin-top : 10px !important;
+        
+}
+ 
+</style>
 
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
-
-                                @if ($errors->has('name'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
-
-                                @if ($errors->has('email'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+</head>
+<body class="hold-transition register-page">
+<div class="register-box">   
+    <div class="card">
+  <div class="register-logo">{{ __('Register') }}</div>
+      <div class="card-body register-card-body">      
+      <form method="POST" action="{{ route('register') }}">
+        @csrf
+        <div class="form-group has-feedback">
+        <input id="name" placeholder="Enter Name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
+                @if ($errors->has('name'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('name') }}</strong>
+                    </span>
+                @endif
+          <span class="fa fa-user form-control-feedback"> <b> Name </b> </span>
+        </div>
+        <div class="form-group has-feedback">
+        <input id="email" placeholder="Enter Email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
+                @if ($errors->has('email'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('email') }}</strong>
+                    </span>
+                @endif
+          <span class="fa fa-envelope form-control-feedback"> <b> Email </b> </span>
+        </div>
+        <div class="form-group has-feedback">
+        <input id="password" placeholder="Enter Password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+                @if ($errors->has('password'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('password') }}</strong>
+                    </span>
+                @endif
+          <span class="fa fa-lock form-control-feedback"> <b> Password </b> </span>
+        </div>
+        <div class="form-group has-feedback">
+        <input id="password-confirm" placeholder="Enter Confirm Password" type="password" class="form-control" name="password_confirmation" required>
+          <span class="fa fa-lock form-control-feedback"> <b> Confirm Password </b> </span>
+        </div>
+        <div class="row">
+          <div class="col-8">
+            <div class="checkbox icheck">
+              <label>
+                <input type="checkbox" required> I agree to the <a href="#">terms</a>
+              </label>
+            </div>
+          </div>
+          <!-- /.col -->
+          <div class="col-4">
+          <button type="submit" class="btn btn-primary">
                                     {{ __('Register') }}
                                 </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+          </div>
+          <!-- /.col -->
         </div>
-    </div>
+      </form>
+
+      <div class="social-auth-links text-center">
+        <p>- OR -</p>         
+        <a class="btn btn-block btn-success" href="{{ route('login') }}">Already Member!! Login</a>
+      </div>
+      
+   
+    <!-- /.form-box -->
+  </div><!-- /.card -->
 </div>
-@endsection
+<!-- /.register-box -->
+
+
+<script src="/js/app.js"></script>
+<!-- iCheck --> 
+</body>
+</html>
