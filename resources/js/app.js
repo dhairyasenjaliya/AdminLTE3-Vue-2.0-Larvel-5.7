@@ -135,5 +135,21 @@ let routes = [
  
 const app = new Vue({
     el: '#app',
-    router
+    router,
+    data : {
+            search : ''
+    },
+
+    methods: {
+      searchIt : _.debounce(() => {
+        Fire.$emit('searching');
+          },1000),
+
+          // For Printing
+
+          printme() {
+            window.print(); 
+          }
+    }
+
 })

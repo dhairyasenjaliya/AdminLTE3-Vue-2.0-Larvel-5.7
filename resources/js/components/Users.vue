@@ -243,6 +243,17 @@
             } );
             // For updating user table every 3 second METHOD - 1 (PErformance Issues) Applicable for small app
             // setInterval(()=>this.loadUser(),3000);
+
+                Fire.$on('searching',() => {
+                let query = this.$parent.search;
+                axios.get('api/findUser?q=' + query)
+                .then((data) => {
+                    this.users = data.data
+                })
+                .catch(() => {
+                })
+            })
+
             this.$Progress.finish();
         },
 

@@ -29,7 +29,7 @@ class UserController extends Controller
         //     return User::latest()->paginate(5);
         // } //For Multi Access Users
         $this->authorize('isAdmin');
-        return User::latest()->paginate(5);
+        return User::latest()->paginate(15);
     }
 
     /**
@@ -133,5 +133,21 @@ class UserController extends Controller
         $this->authorize('isAdmin');
         $user = User::findOrFail($id);
         $user->delete();
+    }
+
+
+
+    public function search()
+    {
+        if ($search = \Request::get('q')) {
+            $users = User::where(function($query) use ($search){
+                $query->where('name','LIKE',"%$search%")
+                        ->orWhere('email','LIKE',"%$search%")
+                        ->orWhere('type','LIKE',"%$search%");
+            })->paginate(20);
+        }else{
+            $users = User::latest()->paginate(5);
+        }
+        return $users;
     }
 }

@@ -2484,6 +2484,12 @@ __webpack_require__.r(__webpack_exports__);
     }); // For updating user table every 3 second METHOD - 1 (PErformance Issues) Applicable for small app
     // setInterval(()=>this.loadUser(),3000);
 
+    Fire.$on('searching', function () {
+      var query = _this6.$parent.search;
+      axios.get('api/findUser?q=' + query).then(function (data) {
+        _this6.users = data.data;
+      }).catch(function () {});
+    });
     this.$Progress.finish();
   },
   mounted: function mounted() {
@@ -79123,7 +79129,19 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_6__["default"]({
 });
 var app = new Vue({
   el: '#app',
-  router: router
+  router: router,
+  data: {
+    search: ''
+  },
+  methods: {
+    searchIt: _.debounce(function () {
+      Fire.$emit('searching');
+    }, 1000),
+    // For Printing
+    printme: function printme() {
+      window.print();
+    }
+  }
 });
 
 /***/ }),
