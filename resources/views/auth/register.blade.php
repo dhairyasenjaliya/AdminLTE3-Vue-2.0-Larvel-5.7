@@ -17,6 +17,10 @@
         margin-top : 10px !important;
         
 }
+
+body{
+  background: #083952 !important;
+}
  
 </style>
 
@@ -79,8 +83,9 @@
 
       <div class="social-auth-links text-center">
         <p>- OR -</p>         
-        <a class="btn btn-block btn-success" href="{{ route('login') }}">Already Member!! Login</a>
-      </div>
+        <a class="btn btn-block btn-success" href="{{ route('login') }}"><i class="fas fa-user"></i> Already Member!! Login</a>
+        <a class="btn btn-block btn-warning" href="{{ url('/') }}"><i class="fas fa-home"></i> Home!!</a>
+                                
       
    
     <!-- /.form-box -->

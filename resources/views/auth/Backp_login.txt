@@ -13,8 +13,8 @@
   <link rel="stylesheet" href="/css/app.css">
 
 <style>
-body{
-  background: #083952 !important;
+.body{
+        background-image :  ;
 }
 </style>
 
@@ -71,16 +71,13 @@ body{
 
       <div class="social-auth-links text-center mb-3">
         <p>- OR -</p>
-                               <!-- @if (Route::has('password.request'))
+                               @if (Route::has('password.request'))
                                     <a  class="btn btn-block btn-danger" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
                                     </a>
-                                @endif -->
+                                @endif
                                 
-                                <a class="btn btn-block btn-danger" href="{{ route('register') }}"><i class="fas fa-plus-circle"></i> Register</a>
-                                <a class="btn btn-block btn-warning" href="{{ url('/') }}"><i class="fas fa-home"></i>Home!!</a>
-                                
-                
+                                <a class="btn btn-block btn-primary" href="{{ route('register') }}">Register</a>
       </p>
     </div>
     </div>

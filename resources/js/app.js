@@ -99,7 +99,7 @@ Vue.component(
 );
 
 
-// Best 404 page designs https://undraw.co/illustrations
+// Best 404 page designs https://undraw.co/illustrations SVG
 
 Vue.component(
   'not-found',//Creating Tags

@@ -79097,7 +79097,7 @@ window.toast = toast; //Passport in vue
 
 Vue.component('passport-clients', __webpack_require__(/*! ./components/passport/Clients.vue */ "./resources/js/components/passport/Clients.vue").default);
 Vue.component('passport-authorized-clients', __webpack_require__(/*! ./components/passport/AuthorizedClients.vue */ "./resources/js/components/passport/AuthorizedClients.vue").default);
-Vue.component('passport-personal-access-tokens', __webpack_require__(/*! ./components/passport/PersonalAccessTokens.vue */ "./resources/js/components/passport/PersonalAccessTokens.vue").default); // Best 404 page designs https://undraw.co/illustrations
+Vue.component('passport-personal-access-tokens', __webpack_require__(/*! ./components/passport/PersonalAccessTokens.vue */ "./resources/js/components/passport/PersonalAccessTokens.vue").default); // Best 404 page designs https://undraw.co/illustrations SVG
 
 Vue.component('not-found', //Creating Tags
 __webpack_require__(/*! ./components/NotFound.vue */ "./resources/js/components/NotFound.vue").default); //Fetch Data using Custom event
